@@ -1,0 +1,26 @@
+services:
+  web:
+    image: saira102/mid-app:55503
+    ports:
+      - "8003:5000"
+    environment:
+      - ROLLNO=55503
+      - REDIS_HOST=cache
+    networks:
+      - net-55503
+    depends_on:
+      - cache
+
+  cache:
+    image: redis:alpine
+    command: redis-server --appendonly yes --dir /data
+    volumes:
+      - data-55503:/data
+    networks:
+      - net-55503
+
+networks:
+  net-55503:
+
+volumes:
+  data-55503:
